@@ -1,0 +1,8 @@
+function d7dev_field_formatter_info() {
+  return array(    
+    'd7dev_integer_duration' => array(
+      'label' => t('Duration'),
+      'field types' => array('number_integer'),
+     )
+  );
+}
