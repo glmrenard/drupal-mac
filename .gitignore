@@ -7,3 +7,4 @@ sites/*/private
 
 # Ignore sublime text 2 autocompletsion
 *.sublime-projectcompletions
+.DS_Store
