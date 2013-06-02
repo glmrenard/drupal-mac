@@ -46,8 +46,38 @@ function d7dev_field_formatter_view($entity_type, $entity, $field, $instance, $l
   return $element;
 }
 
+/**
+  * Implements hook_image_default_styles().
+   */
+function d7dev_image_default_styles() {
+  $styles = array();
+
+  $styles['small'] = array(
+    'effects' => array(
+      array(
+        'name' => 'image_scale',
+        'data' => array(
+          'width' => 160,
+          'height' => 120,
+          'upscale' => 1,
+        ),
+        'weight' => 0,
+      ),
+      array(
+        'name' => 'image_desaturate',
+        'data' => array(),
+        'weight' => 1,
+      ),
+    ),
+  );
+
+  return $styles;
+}
+
 //simple helper function to get gcd of minutes
 function gcd($a, $b) {
     $b = ( $a == 0 )? 0 : $b;
     return ( $a % $b )? gcd($b, abs($a - $b)) : $b;
 }
+
+
