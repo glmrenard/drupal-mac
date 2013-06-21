@@ -435,3 +435,21 @@ function _emailwidget_html5_tools_field_widget_forms(&$form, &$form_state, $fiel
     '#default_value' => $value,
   );
 }
+
+function html5_tools_form_webform_client_form_alter(&$form, &$form_state,$form_id) {
+  //Modify Webform email type fields ot use an email field
+  if (variable_get('html5_tools_override_webform_email', 1) && isset($form['submitted'])) {
+    //loop through all of the webform fields
+    foreach($form['submitted'] as &$field) {
+      //if the webform_component type is set and is email,
+      //then this is a field we want to change
+      if(isset($field['#webform_component']['type']) && $field['#webform_component']['type'] == 'email') {
+        $field['#type']  = 'emailfield'; //Set the field type to emailfield
+        //dpm($field);
+      }
+    }
+  }
+
+  //dd($form, 'd7dev_form_webform_client_form_55_alter');
+  //pm($form);
+}

@@ -94,7 +94,7 @@ function html5_tools_admin_settings() {
     '#title' => t('Alter publication date markup'),
     '#description' => t('Implements the new &lt;time&gt; element and it\'s <em>pubdate</em> attribute, altering content and comment publication dates with the new HTML5 format by overriding the <em>$submitted</em> variable.'),
   );
-  
+
   if (module_exists('views')) {
     $form['html5_tools_overrides']['html5_tools_override_views_field_rewrite_elements'] = array(
       '#type' => 'checkbox',
@@ -106,7 +106,19 @@ function html5_tools_admin_settings() {
   $form['html5_tools_help_text'] = array(
     '#markup' => t("If one of these is not working, it might be because your theme is overriding what is specified here. Themes always get the last say in how something is outputted. Check your theme's template.php file."),
   );
-
+  if (module_exists('webform')) {
+   $form['html5_tools_webform_forms'] = array(
+     '#type' => 'fieldset',
+     '#title' => t("Override Webform fields with their HTML5 counterparts"),
+     '#collapsible' => FALSE,
+   );
+   $form['html5_tools_webform_forms']['html5_tools_override_webform_email'] = array(
+     '#type' => 'checkbox',
+     '#default_value' => variable_get('html5_tools_override_webform_email', 1),
+     '#title' => t('E-mail field'),
+     '#description' => t('Modify the Webform email textfield to an email field.'),
+   );
+  }
   $form['#submit'][] = 'html5_tools_admin_settings_submit';
 
   return system_settings_form($form);

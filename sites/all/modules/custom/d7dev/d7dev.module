@@ -28,10 +28,10 @@ function d7dev_field_formatter_view($entity_type, $entity, $field, $instance, $l
   switch ($display['type']) {
     case 'd7dev_integer_duration':
       foreach ($items as $delta => $item) {
-        //some simple math to covert the duration minutes to hours and the remainder as minutes
+        //Some simple math to covert the duration minutes to hours and the remainder as minutes
         $hours = floor($item['value']/60);
         $minutes = $item['value']%60;
-        //get greatest common denominator of minutes to convert to fraction of hours
+        //Get greatest common denominator of minutes to convert to fraction of hours
         $minutes_gcd = gcd($minutes, 60);
         //&frasl; is the html entity for the fraction separator, and we use the sup and sub html element to give
         //the appearance of a fraction
@@ -74,10 +74,26 @@ function d7dev_image_default_styles() {
   return $styles;
 }
 
-//simple helper function to get gcd of minutes
-function gcd($a, $b) {
-    $b = ( $a == 0 )? 0 : $b;
-    return ( $a % $b )? gcd($b, abs($a - $b)) : $b;
+ /**
+     * Implements hook_form_FORM_ID_alter().
+     */
+function d7dev_form_webform_client_form_55_alter(&$form, &$form_state,$form_id) {
+  //loop through all of the webform fields
+  foreach($form['submitted'] as &$field) {
+    //if the webform_component type is set and is email,
+    //then this is a field we want to change
+    if(isset($field['#webform_component']['type']) && $field['#webform_component']['type'] == 'email') {
+      $field['#type']  = 'emailfield'; //Set the field type to emailfield
+      //dpm($field);
+    }
+  }
+
+  //dd($form, 'd7dev_form_webform_client_form_55_alter');
+  //pm($form);
 }
 
-
+//simple helper function to get gcd of minutes
+function gcd($a, $b) {
+  $b = ($a == 0) ? 0 : $b;
+  return ($a % $b) ? gcd($b, abs($a - $b)) : $b;
+}
